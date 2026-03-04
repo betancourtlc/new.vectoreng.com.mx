@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vector Engineering</title>
+  <style>
+    :root{--bg:#070b14;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.14);--txt:#e9eefc;--mut:rgba(233,238,252,.72)}
+    *{box-sizing:border-box} body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--txt)}
+    .hero{min-height:92vh;display:grid;place-items:center;padding:72px 18px;position:relative;overflow:hidden}
+    .bg{position:absolute;inset:0;background:
+        radial-gradient(900px 500px at 15% 55%, rgba(0,190,255,.18), transparent 60%),
+        radial-gradient(900px 500px at 85% 50%, rgba(0,255,160,.15), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.65));
+      z-index:0}
+    .wrap{max-width:1100px;width:100%;z-index:1}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:40px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.4px}
+    .badge{padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--mut);font-size:12px}
+    h1{font-size:clamp(32px,4vw,52px);line-height:1.05;margin:0 0 14px}
+    p{max-width:720px;margin:0 0 26px;color:var(--mut);font-size:clamp(15px,1.2vw,18px);line-height:1.5}
+    .cta{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 26px}
+    a.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:14px;text-decoration:none;border:1px solid var(--line);color:var(--txt);background:rgba(255,255,255,.04)}
+    a.btn.primary{background:rgba(0,190,255,.14);border-color:rgba(0,190,255,.35)}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+    .card{padding:14px 14px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+    .card b{display:block;margin-bottom:6px}
+    .card span{color:var(--mut);font-size:13px;line-height:1.35}
+    footer{padding:22px 18px;color:rgba(233,238,252,.6);border-top:1px solid rgba(255,255,255,.08)}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="bg" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <div class="top">
+        <div class="brand">VECTOR ENGINEERING</div>
+        <div class="badge">Automatización Industrial • Procesos Circulares • Pirólisis</div>
+      </div>
+
+      <h1>Ingeniería aplicada para automatización industrial y procesos circulares.</h1>
+      <p>Diseñamos, integramos y ponemos en marcha sistemas industriales: desde PLC/SCADA e integración de celdas, hasta plantas de pirólisis con control, seguridad e infraestructura de proceso.</p>
+
+      <div class="cta">
+        <a class="btn primary" href="/automation.html">Automatización Industrial</a>
+        <a class="btn" href="/pyrolysis.html">Pirólisis & Procesos Circulares</a>
+        <a class="btn" href="/contact.html">Contacto</a>
+      </div>
+
+      <div class="grid">
+        <div class="card"><b>Automatización</b><span>PLC/SCADA, interlocks, instrumentación, EOAT, poka-yokes, puesta en marcha.</span></div>
+        <div class="card"><b>Pirólisis</b><span>Reactores batch/continuos, tren térmico, condensación, scrubbers, operación y comisionamiento.</span></div>
+        <div class="card"><b>Integración</b><span>Diseño 2D/3D, fabricación, maquinados, instalación en sitio, SAT y documentación técnica.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © Vector Engineering — vectoreng.com.mx
+  </footer>
+</body>
+</html>
