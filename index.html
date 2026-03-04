@@ -8,11 +8,16 @@
     :root{--bg:#070b14;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.14);--txt:#e9eefc;--mut:rgba(233,238,252,.72)}
     *{box-sizing:border-box} body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--txt)}
     .hero{min-height:92vh;display:grid;place-items:center;padding:72px 18px;position:relative;overflow:hidden}
-    .bg{position:absolute;inset:0;background:
-        radial-gradient(900px 500px at 15% 55%, rgba(0,190,255,.18), transparent 60%),
-        radial-gradient(900px 500px at 85% 50%, rgba(0,255,160,.15), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.65));
-      z-index:0}
+    .bg{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(90deg,
+      rgba(7,11,20,.86) 0%,
+      rgba(7,11,20,.70) 45%,
+      rgba(7,11,20,.84) 100%),
+    url("/assets/Background2026_1920x1080_crop.webp") center/cover no-repeat;
+  z-index:0;
+}
     .wrap{max-width:1100px;width:100%;z-index:1}
     .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:40px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.4px}
