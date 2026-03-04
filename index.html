@@ -4,67 +4,497 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Vector Engineering</title>
+  <meta name="description" content="Ingeniería aplicada en automatización industrial y procesos circulares (pirólisis). Diseño, integración y puesta en marcha." />
   <style>
-    :root{--bg:#070b14;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.14);--txt:#e9eefc;--mut:rgba(233,238,252,.72)}
-    *{box-sizing:border-box} body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--txt)}
-    .hero{min-height:92vh;display:grid;place-items:center;padding:72px 18px;position:relative;overflow:hidden}
-.bg{
-  position:absolute; inset:0;
-  background:
-    linear-gradient(90deg,
-      rgba(7,11,20,.86) 0%,
-      rgba(7,11,20,.70) 45%,
-      rgba(7,11,20,.84) 100%),
-   url("/assets/hero.webp?v=1") center/cover no-repeat;
-  z-index:0;
-  pointer-events:none;
-}
-    .wrap{max-width:1100px;width:100%;z-index:1}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:40px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.4px}
-    .badge{padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--mut);font-size:12px}
-    h1{font-size:clamp(32px,4vw,52px);line-height:1.05;margin:0 0 14px}
-    p{max-width:720px;margin:0 0 26px;color:var(--mut);font-size:clamp(15px,1.2vw,18px);line-height:1.5}
-    .cta{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 26px}
-    a.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:14px;text-decoration:none;border:1px solid var(--line);color:var(--txt);background:rgba(255,255,255,.04)}
-    a.btn.primary{background:rgba(0,190,255,.14);border-color:rgba(0,190,255,.35)}
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
-    .card{padding:14px 14px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
-    .card b{display:block;margin-bottom:6px}
-    .card span{color:var(--mut);font-size:13px;line-height:1.35}
-    footer{padding:22px 18px;color:rgba(233,238,252,.6);border-top:1px solid rgba(255,255,255,.08)}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#0b1220;
+      --muted:rgba(11,18,32,.68);
+      --line:rgba(15,23,42,.12);
+      --shadow:0 10px 30px rgba(2,6,23,.08);
+      --shadow2:0 6px 18px rgba(2,6,23,.06);
+
+      /* Rojo Vector (acento) */
+      --primary:#b91c1c;
+      --primarySoft:rgba(185,28,28,.12);
+      --primaryLine:rgba(185,28,28,.28);
+
+      --radius:18px;
+      --max:1120px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Layout helpers */
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* NAV (clean / investor-ready) */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,255,255,.86);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.35px;
+    }
+    .logo-img{height:34px;width:auto;display:block}
+
+    .nav-links{
+      display:flex; align-items:center; gap:10px;
+      color:var(--muted);
+      font-weight:700; font-size:14px;
+    }
+    .nav-links a{
+      padding:8px 10px;
+      border-radius:12px;
+    }
+    .nav-links a:hover{
+      background:rgba(2,6,23,.04);
+      color:var(--text);
+    }
+
+    .nav-cta{display:flex; gap:10px; align-items:center}
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow: var(--shadow2);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      border-color: var(--primaryLine);
+      background: linear-gradient(180deg, var(--primarySoft), rgba(255,255,255,.95));
+    }
+    .btn.primary:hover{border-color: rgba(185,28,28,.40)}
+    .btn.ghost{
+      background:#fff;
+      border-color: rgba(15,23,42,.16);
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      padding:52px 0 28px;
+      overflow:hidden;
+      border-bottom:1px solid var(--line);
+    }
+    /* Background texture (very subtle) */
+    .hero::before{
+      content:"";
+      position:absolute; inset:-20px;
+      background:url("/assets/hero.webp?v=2") center/cover no-repeat;
+      filter: saturate(.85) contrast(.95) brightness(1.08);
+      opacity:.08;
+      transform:scale(1.02);
+      pointer-events:none;
+    }
+    /* White overlay + red highlight */
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 450px at 18% 28%, rgba(185,28,28,.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,1));
+      pointer-events:none;
+    }
+
+    .hero-grid{
+      position:relative; z-index:1;
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      font-size:12px; font-weight:900; letter-spacing:.28px;
+      color:rgba(11,18,32,.72);
+      background:rgba(2,6,23,.03);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px 12px;
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin:0 0 12px;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height:1.05;
+      letter-spacing:-.02em;
+    }
+    .lead{
+      margin:0 0 18px;
+      max-width: 720px;
+      color:var(--muted);
+      font-size: clamp(15px, 1.15vw, 18px);
+      font-weight:650;
+    }
+
+    .hero-cta{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin:16px 0 0;
+    }
+
+    .micro{
+      margin-top:14px;
+      display:flex; flex-wrap:wrap; gap:10px;
+      color:rgba(11,18,32,.62);
+      font-size:13px; font-weight:800;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.78);
+      border-radius:999px;
+      padding:8px 10px;
+    }
+
+    /* Right panel */
+    .panel{
+      background:rgba(255,255,255,.90);
+      border:1px solid var(--line);
+      border-radius: calc(var(--radius) + 4px);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    .panel h3{margin:0 0 10px; font-size:14px; letter-spacing:.2px}
+    .stat{
+      display:flex; justify-content:space-between; gap:12px;
+      padding:10px 0;
+      border-top:1px solid rgba(15,23,42,.08);
+      font-size:14px;
+    }
+    .stat:first-of-type{border-top:none}
+    .stat b{font-weight:950}
+    .stat span{color:var(--muted); font-weight:800}
+
+    /* Sections */
+    section{padding:34px 0}
+    .section-title{
+      display:flex; justify-content:space-between; align-items:flex-end;
+      gap:14px; margin-bottom:14px;
+    }
+    .section-title h2{margin:0; font-size:22px; letter-spacing:-.01em}
+    .section-title p{margin:0; color:var(--muted); max-width:620px; font-weight:650}
+
+    .grid3{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow: var(--shadow2);
+    }
+    .card b{display:block; margin-bottom:8px; font-size:15px}
+    .card ul{margin:0; padding-left:16px; color:var(--muted); font-weight:700}
+    .card li{margin:6px 0}
+
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:14px;
+    }
+    .proj{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow: var(--shadow2);
+    }
+    .tag{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      font-size:12px;
+      font-weight:900;
+      color:rgba(11,18,32,.72);
+      background:rgba(2,6,23,.02);
+      margin-bottom:10px;
+    }
+    .proj h4{margin:0 0 8px; font-size:14px}
+    .proj p{margin:0; color:var(--muted); font-size:13px; font-weight:700}
+
+    .cta-band{
+      background:linear-gradient(180deg, rgba(185,28,28,.10), rgba(255,255,255,1));
+      border:1px solid rgba(15,23,42,.10);
+      border-radius: calc(var(--radius) + 6px);
+      box-shadow: var(--shadow);
+      padding:18px;
+      display:flex; justify-content:space-between; align-items:center;
+      gap:14px;
+    }
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:22px 0;
+      color:rgba(11,18,32,.62);
+      font-weight:800;
+    }
+    .foot{
+      display:flex; justify-content:space-between; gap:14px;
+      flex-wrap:wrap;
+    }
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero-grid{grid-template-columns:1fr}
+      .projects{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .grid3{grid-template-columns:1fr}
+      .split{grid-template-columns:1fr}
+      .nav-links{display:none}
+    }
+    @media (max-width:520px){
+      .projects{grid-template-columns:1fr}
+      .btn{width:100%}
+      .nav-cta{width:100%}
+      .nav-inner{flex-wrap:wrap}
+    }
   </style>
 </head>
+
 <body>
-  <section class="hero">
-    <div class="bg" aria-hidden="true"></div>
+  <!-- NAV -->
+  <div class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a class="brand" href="/" aria-label="Vector Engineering">
+          <img class="logo-img" src="/assets/logo.png" alt="Vector Engineering" />
+        </a>
 
-    <div class="wrap">
-      <div class="top">
-        <div class="brand">VECTOR ENGINEERING</div>
-        <div class="badge">Automatización Industrial • Procesos Circulares • Pirólisis</div>
+        <div class="nav-links">
+          <a href="/automation.html">Automatización</a>
+          <a href="/pyrolysis.html">Pirólisis</a>
+          <a href="#projects">Proyectos</a>
+          <a href="/contact.html">Contacto</a>
+        </div>
+
+        <div class="nav-cta">
+          <a class="btn primary" href="/contact.html">Solicitar cotización</a>
+          <a class="btn ghost" href="/contact.html">Agendar llamada</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">Automatización Industrial • Procesos Circulares • Pirólisis</div>
+
+          <h1>Ingeniería aplicada para mejorar productividad y circularidad.</h1>
+
+          <p class="lead">
+            Diseñamos, integramos y ponemos en marcha sistemas industriales: desde PLC/SCADA e integración de celdas,
+            hasta plantas de pirólisis con control, seguridad e infraestructura de proceso.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn primary" href="/automation.html">Automatización Industrial</a>
+            <a class="btn ghost" href="/pyrolysis.html">Pirólisis & Procesos Circulares</a>
+            <a class="btn" href="/contact.html">Contacto</a>
+          </div>
+
+          <div class="micro">
+            <span class="pill">Diseño mecánico 2D/3D</span>
+            <span class="pill">PLC/SCADA + Instrumentación</span>
+            <span class="pill">Integración + SAT / Puesta en marcha</span>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <h3>Resumen ejecutivo</h3>
+          <div class="stat"><span>Enfoque</span><b>50/50</b></div>
+          <div class="stat"><span>Entrega</span><b>Diseño → Integración → Comisionamiento</b></div>
+          <div class="stat"><span>Industria</span><b>Manufactura + Reciclaje térmico</b></div>
+          <div class="stat"><span>Ubicación</span><b>Aguascalientes, MX</b></div>
+          <div class="stat"><span>Contacto</span><b>vectoreng.com.mx</b></div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <!-- CAPACIDADES -->
+  <section>
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h2>Capacidades clave</h2>
+          <p>Enfoque práctico, documentación técnica y ejecución en campo con responsabilidad total.</p>
+        </div>
       </div>
 
-      <h1>Ingeniería aplicada para automatización industrial y procesos circulares.</h1>
-      <p>Diseñamos, integramos y ponemos en marcha sistemas industriales: desde PLC/SCADA e integración de celdas, hasta plantas de pirólisis con control, seguridad e infraestructura de proceso.</p>
+      <div class="grid3">
+        <div class="card">
+          <b>Automatización Industrial</b>
+          <ul>
+            <li>PLC/SCADA, interlocks, instrumentación</li>
+            <li>EOAT, poka-yokes, conveyors, celdas</li>
+            <li>FAT/SAT, comisionamiento y soporte</li>
+          </ul>
+        </div>
 
-      <div class="cta">
-        <a class="btn primary" href="/automation.html">Automatización Industrial</a>
-        <a class="btn" href="/pyrolysis.html">Pirólisis & Procesos Circulares</a>
-        <a class="btn" href="/contact.html">Contacto</a>
-      </div>
+        <div class="card">
+          <b>Pirólisis & Procesos Circulares</b>
+          <ul>
+            <li>Reactores batch/continuos (Rotatorios, Auger, Lecho Fijo o Fluidizado)</li>
+            <li>Tren térmico, condensación, scrubbers</li>
+            <li>Operación, puesta en marcha y mejoras</li>
+          </ul>
+        </div>
 
-      <div class="grid">
-        <div class="card"><b>Automatización</b><span>PLC/SCADA, interlocks, instrumentación, poka-yokes, puesta en marcha.</span></div>
-        <div class="card"><b>Pirólisis</b><span>Reactores batch/continuos (Rotatorios, Auger, Lecho Fijo o Fluidizado), tren térmico, condensación, scrubbers, operación y comisionamiento.</span></div>
-        <div class="card"><b>Integración</b><span>Diseño 2D/3D, fabricación, maquinados, instalación en sitio, SAT y documentación técnica.</span></div>
+        <div class="card">
+          <b>Integración Mecánica</b>
+          <ul>
+            <li>Diseño 2D/3D y fabricación de dispositivos</li>
+            <li>Maquinados industriales y montaje</li>
+            <li>Instalación en sitio + documentación</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- 2 RUTAS (50/50) -->
+  <section>
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h2>Dos líneas, una metodología</h2>
+          <p>Los mismos estándares de ingeniería para automatización y pirólisis: claridad, trazabilidad y seguridad.</p>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <b>Automatización Industrial</b>
+          <p style="margin:0;color:var(--muted);font-weight:700">
+            Proyectos orientados a productividad, seguridad y calidad: arquitectura de control, instrumentación,
+            integración de equipos y puesta en marcha.
+          </p>
+          <div style="margin-top:12px">
+            <a class="btn primary" href="/automation.html">Ver Automatización</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <b>Pirólisis & Procesos Circulares</b>
+          <p style="margin:0;color:var(--muted);font-weight:700">
+            Integración a escala industrial: reactor + tren térmico + condensación + tratamiento de gases,
+            con control y procedimientos de operación.
+          </p>
+          <div style="margin-top:12px">
+            <a class="btn ghost" href="/pyrolysis.html">Ver Pirólisis</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h2>Proyectos destacados</h2>
+          <p>Tarjetas claras, comparables y enfocadas en alcance/entregables.</p>
+        </div>
+      </div>
+
+      <div class="projects">
+        <div class="proj">
+          <div class="tag">Automatización</div>
+          <h4>PLC/SCADA + Interlocks</h4>
+          <p>Arquitectura de control, IO list, pruebas y puesta en marcha.</p>
+        </div>
+        <div class="proj">
+          <div class="tag">Automatización</div>
+          <h4>Dispositivos y Poka-yokes</h4>
+          <p>Jigs/fixtures, conveyors, integración mecánica y validación.</p>
+        </div>
+        <div class="proj">
+          <div class="tag">Pirólisis</div>
+          <h4>Tren térmico + Condensación</h4>
+          <p>Diseño, montaje e instrumentación para operación estable.</p>
+        </div>
+        <div class="proj">
+          <div class="tag">Pirólisis</div>
+          <h4>Scrubber + Control</h4>
+          <p>Tratamiento de gases, seguridad operativa y documentación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <b style="font-size:16px">¿Quieres una propuesta técnica o una llamada de diagnóstico?</b>
+          <div style="color:var(--muted);font-weight:800;margin-top:4px">
+            Compártenos tu alcance y te respondemos con una ruta clara de implementación.
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn primary" href="/contact.html">Solicitar cotización</a>
+          <a class="btn" href="/contact.html">Contacto</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    © Vector Engineering — vectoreng.com.mx
+    <div class="container">
+      <div class="foot">
+        <div>© Vector Engineering — Aguascalientes, México</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a href="/contact.html">Contacto</a>
+          <a href="/automation.html">Automatización</a>
+          <a href="/pyrolysis.html">Pirólisis</a>
+        </div>
+      </div>
+    </div>
   </footer>
 </body>
 </html>
