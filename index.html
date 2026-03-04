@@ -41,9 +41,10 @@
       position:fixed;
       inset:0;
       z-index:-2;
-      background:url("/assets/hero.webp?v=20") center/cover no-repeat;
-      filter:saturate(.95) contrast(1.03);
+      background:url("/assets/hero.webp?v=30") center/cover no-repeat;
+      filter:saturate(1.12) contrast(1.10) brightness(1.02);
       transform:scale(1.02);
+      will-change: transform;
     }
     .bg::before{
       content:"";
@@ -52,13 +53,13 @@
         radial-gradient(1100px 650px at 18% 45%, rgba(0,190,255,.18), transparent 60%),
         radial-gradient(1100px 650px at 82% 45%, rgba(16,185,129,.16), transparent 60%),
         radial-gradient(800px 520px at 50% 30%, rgba(185,28,28,.18), transparent 62%),
-        linear-gradient(90deg, rgba(7,11,20,.86) 0%, rgba(7,11,20,.68) 45%, rgba(7,11,20,.84) 100%);
+        linear-gradient(90deg, rgba(7,11,20,.78) 0%, rgba(7,11,20,.58) 45%, rgba(7,11,20,.76) 100%);
     }
     .bg::after{
       content:"";
       position:absolute; inset:0;
-      background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,.38) 100%);
-      opacity:.9;
+      background: radial-gradient(circle at center, transparent 48%, rgba(0,0,0,.30) 100%);
+      opacity:.75;
       mix-blend-mode:multiply;
     }
 
@@ -78,7 +79,7 @@
       position:relative;
     }
 
-    /* Top brand area (keeps only brand; no big text) */
+    /* Top brand area */
     .top{
       display:flex;
       flex-direction:column;
@@ -123,7 +124,7 @@
       width:100%;
       display:flex;
       justify-content:center;
-      margin-top: clamp(140px, 22vh, 260px); /* “un poco hacia abajo” */
+      margin-top: clamp(220px, 34vh, 420px); /* MÁS ABAJO */
     }
     .navBar{
       display:flex;
@@ -132,10 +133,10 @@
       gap: 12px;
       padding: 14px;
       border-radius: calc(var(--radius) + 10px);
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.085);
+      border: 1px solid rgba(255,255,255,.18);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
     }
 
     .btn{
@@ -144,38 +145,35 @@
       gap: 10px;
       padding: 12px 14px;
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      color: rgba(255,255,255,.95);
+      border: 1px solid rgba(255,255,255,.20);
+      background: rgba(255,255,255,.085);
+      color: rgba(255,255,255,.96);
       font-weight: 950;
       letter-spacing: .1px;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease, box-shadow .12s ease;
       white-space:nowrap;
-      min-width: 210px; /* hace que se vean “equilibrados” */
+      min-width: 210px;
       justify-content:center;
+      text-shadow: 0 1px 10px rgba(0,0,0,.30);
     }
     .btn:hover{
       transform: translateY(-1px);
-      background: rgba(255,255,255,.11);
-      border-color: rgba(255,255,255,.28);
-    }
-    .btn span{
-      opacity:.92;
-      font-weight: 950;
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.30);
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
     }
     .btn .arrow{
       opacity:.9;
       font-size: 14px;
     }
 
-    /* Accent (Automatización como botón primario) */
     .btn.primary{
       border-color: var(--accentLine);
-      background: linear-gradient(180deg, var(--accentSoft), rgba(255,255,255,.07));
+      background: linear-gradient(180deg, var(--accentSoft), rgba(255,255,255,.08));
     }
     .btn.primary:hover{
-      border-color: rgba(185,28,28,.60);
-      background: linear-gradient(180deg, rgba(185,28,28,.22), rgba(255,255,255,.08));
+      border-color: rgba(185,28,28,.62);
+      background: linear-gradient(180deg, rgba(185,28,28,.24), rgba(255,255,255,.10));
     }
 
     /* Small footer line */
@@ -195,10 +193,10 @@
     @media (max-width: 980px){
       .logoPlate img{height:48px}
       .btn{min-width: 190px}
-      .navZone{margin-top: clamp(120px, 18vh, 220px);}
+      .navZone{margin-top: clamp(190px, 28vh, 360px);}
     }
     @media (max-width: 560px){
-      .btn{min-width: 100%;} /* en móvil, se apilan y ocupan todo */
+      .btn{min-width: 100%;}
       .navBar{width:100%}
       .mini{justify-content:center}
     }
@@ -206,11 +204,11 @@
 </head>
 
 <body>
-  <div class="bg" aria-hidden="true"></div>
+  <div class="bg" aria-hidden="true" id="bg"></div>
 
   <main class="wrap">
     <div class="container">
-      <!-- Marca (sin el bloque de texto grande) -->
+      <!-- Marca -->
       <div class="top">
         <div class="logoPlate">
           <img src="/assets/logo.png" alt="Vector Engineering" />
@@ -221,15 +219,43 @@
       <!-- Botonera horizontal centrada más abajo -->
       <div class="navZone">
         <nav class="navBar" aria-label="Navegación principal">
-          <a class="btn primary" href="/automation.html"><span>Automatización</span> <span class="arrow">↗</span></a>
-          <a class="btn" href="/pyrolysis.html"><span>Pirólisis &amp; Procesos Circulares</span> <span class="arrow">↗</span></a>
-          <a class="btn" href="/projects.html"><span>Proyectos</span> <span class="arrow">↗</span></a>
-          <a class="btn" href="/contact.html"><span>Contacto</span> <span class="arrow">↗</span></a>
+          <a class="btn primary" href="/automation.html">Automatización <span class="arrow">↗</span></a>
+          <a class="btn" href="/pyrolysis.html">Pirólisis &amp; Procesos Circulares <span class="arrow">↗</span></a>
+          <a class="btn" href="/projects.html">Proyectos <span class="arrow">↗</span></a>
+          <a class="btn" href="/contact.html">Contacto <span class="arrow">↗</span></a>
         </nav>
       </div>
     </div>
 
     <div class="mini">Aguascalientes, México • vectoreng.com.mx</div>
   </main>
+
+  <!-- Parallax sutil del background -->
+  <script>
+    (function () {
+      const bg = document.getElementById('bg');
+      if (!bg) return;
+
+      // Respeta "reducir movimiento" del sistema
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      let ticking = false;
+
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY || 0;
+          // Parallax muy sutil (1.5% del scroll)
+          bg.style.transform = 'scale(1.02) translate3d(0,' + (y * 0.015) + 'px,0)';
+          ticking = false;
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
 </body>
 </html>
