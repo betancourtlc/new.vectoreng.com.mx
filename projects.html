@@ -135,7 +135,30 @@
       background: linear-gradient(180deg, var(--accentSoft), rgba(255,255,255,.06));
     }
 
-    /* ===== Project Card Standard (Evidencia + Descripción + Disclaimer) ===== */
+    /* ===== Simple Project Cards (Evidencia + Título) ===== */
+.grid{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap:12px;
+  align-items:stretch;
+}
+@media (max-width: 980px){
+  .grid{grid-template-columns:1fr}
+}
+
+.card{
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
 .media{
   position: relative;
   border-radius: 16px;
@@ -145,6 +168,7 @@
   aspect-ratio: 16 / 9;
   box-shadow: 0 10px 40px rgba(0,0,0,.35);
 }
+
 .media video,
 .media img{
   width: 100%;
@@ -152,7 +176,16 @@
   display: block;
   object-fit: cover;
 }
-/* Watermark overlay (requiere /assets/watermark.png) */
+
+.proj-title{
+  margin:0;
+  font-weight: 980;
+  font-size: 14px;
+  letter-spacing:.15px;
+  color: rgba(255,255,255,.92);
+}
+
+/* (Opcional) watermark overlay en evidencia */
 .media::after{
   content:"";
   position:absolute;
@@ -162,90 +195,8 @@
   background-repeat: no-repeat;
   background-position: 92% 10%;
   background-size: 34% auto;
-  opacity: 0.22;
+  opacity: 0.16;
   mix-blend-mode: screen;
-}
-
-.proj-title{
-  margin:0;
-  font-weight: 980;
-  font-size: 15px;
-  letter-spacing:.15px;
-}
-.proj-desc{
-  margin:0;
-  color: rgba(255,255,255,.80);
-  font-weight: 650;
-  line-height: 1.45;
-  font-size: 13px;
-}
-
-/* bullets (usa tu clase existente .bullets en HTML) */
-.bullets{
-  margin:0;
-  padding-left:18px;
-  color: rgba(255,255,255,.78);
-  font-weight: 650;
-  line-height: 1.45;
-  font-size: 13px;
-}
-.bullets li{margin:6px 0}
-
-.rights{
-  margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255,255,255,.10);
-  color: rgba(255,255,255,.62);
-  font-weight: 750;
-  font-size: 11px;
-  line-height: 1.35;
-}
-/* Watermark overlay (asegúrate de tener /assets/watermark.png) */
-.media::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background-image: url("/assets/watermark.png");
-  background-repeat: no-repeat;
-  background-position: 92% 10%;
-  background-size: 34% auto;
-  opacity: 0.22;
-  mix-blend-mode: screen;
-}
-
-/* Text blocks */
-.proj-title{
-  margin:0;
-  font-weight: 980;
-  font-size: 15px;
-  letter-spacing:.15px;
-}
-.proj-desc{
-  margin:0;
-  color: rgba(255,255,255,.80);
-  font-weight: 650;
-  line-height: 1.45;
-  font-size: 13px;
-}
-.bullets{
-  margin:0;
-  padding-left:18px;
-  color: rgba(255,255,255,.78);
-  font-weight: 650;
-  line-height: 1.45;
-  font-size: 13px;
-}
-.bullets li{margin:6px 0}
-
-.rights{
-  margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255,255,255,.10);
-  color: rgba(255,255,255,.62);
-  font-weight: 750;
-  font-size: 11px;
-  line-height: 1.35;
 }
   </style>
 </head>
