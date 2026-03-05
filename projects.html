@@ -135,79 +135,7 @@
       background: linear-gradient(180deg, var(--accentSoft), rgba(255,255,255,.06));
     }
 
-    /* Cards grid */
-    .grid{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:12px;
-      align-items:stretch;
-    }
-
-    .card{
-      padding:14px;
-      border-radius:18px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      min-height: 210px;
-    }
-
-    .tagRow{
-      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
-    }
-    .tag{
-      display:inline-flex;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.06);
-      font-size:12px;
-      font-weight:950;
-      color:rgba(255,255,255,.86);
-    }
-    .tag.red{border-color:var(--accentLine); background:rgba(185,28,28,.14)}
-    .tag.dim{opacity:.9}
-
-    .title{
-      font-weight:980;
-      font-size:15px;
-      letter-spacing:.15px;
-      margin:0;
-    }
-    .meta{
-      margin:0;
-      color:rgba(255,255,255,.80);
-      font-weight:650;
-      line-height:1.45;
-      font-size:13px;
-    }
-
-    .bullets{
-      margin:0;
-      padding-left:18px;
-      color:rgba(255,255,255,.78);
-      font-weight:650;
-      line-height:1.45;
-      font-size:13px;
-    }
-    .bullets li{margin:6px 0}
-
-    .footer{
-      margin-top:18px;
-      color:rgba(255,255,255,.62);
-      font-weight:750;
-      font-size:12px;
-    }
-
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
-    }
-    /* ===== Project Card Standard ===== */
+    /* ===== Project Card Standard (Evidencia + Descripción + Disclaimer) ===== */
 .media{
   position: relative;
   border-radius: 16px;
@@ -217,7 +145,6 @@
   aspect-ratio: 16 / 9;
   box-shadow: 0 10px 40px rgba(0,0,0,.35);
 }
-
 .media video,
 .media img{
   width: 100%;
@@ -225,17 +152,54 @@
   display: block;
   object-fit: cover;
 }
-
-.media.placeholder{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color: rgba(255,255,255,.72);
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: .2px;
+/* Watermark overlay (requiere /assets/watermark.png) */
+.media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image: url("/assets/watermark.png");
+  background-repeat: no-repeat;
+  background-position: 92% 10%;
+  background-size: 34% auto;
+  opacity: 0.22;
+  mix-blend-mode: screen;
 }
 
+.proj-title{
+  margin:0;
+  font-weight: 980;
+  font-size: 15px;
+  letter-spacing:.15px;
+}
+.proj-desc{
+  margin:0;
+  color: rgba(255,255,255,.80);
+  font-weight: 650;
+  line-height: 1.45;
+  font-size: 13px;
+}
+
+/* bullets (usa tu clase existente .bullets en HTML) */
+.bullets{
+  margin:0;
+  padding-left:18px;
+  color: rgba(255,255,255,.78);
+  font-weight: 650;
+  line-height: 1.45;
+  font-size: 13px;
+}
+.bullets li{margin:6px 0}
+
+.rights{
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  color: rgba(255,255,255,.62);
+  font-weight: 750;
+  font-size: 11px;
+  line-height: 1.35;
+}
 /* Watermark overlay (asegúrate de tener /assets/watermark.png) */
 .media::after{
   content:"";
@@ -322,59 +286,100 @@
       </section>
 
       <section class="grid" id="grid">
-        <!-- AUTOMATIZACIÓN -->
-        <article class="card" data-cat="auto">
-          <div class="tagRow">
-            <span class="tag red">Automatización</span>
-            <span class="tag dim">PLC/SCADA</span>
-          </div>
-          <h3 class="title">PLC/SCADA + Interlocks (FAT/SAT)</h3>
-          <p class="meta">Arquitectura de control, lista I/O, pruebas y puesta en marcha.</p>
-          <ul class="bullets">
-            <li>Interlocks y seguridad operativa</li>
-            <li>As-built y documentación técnica</li>
-          </ul>
-        </article>
+       <!-- ===== AUTOMATIZACIÓN (3) ===== -->
 
-        <article class="card" data-cat="auto">
-          <div class="tagRow">
-            <span class="tag red">Automatización</span>
-            <span class="tag dim">Fixtures</span>
-          </div>
-          <h3 class="title">Dispositivos y Poka-yokes</h3>
-          <p class="meta">Jigs/fixtures, integración mecánica y validación en línea.</p>
-          <ul class="bullets">
-            <li>Reducción de errores y retrabajos</li>
-            <li>Mejora de repetibilidad</li>
-          </ul>
-        </article>
+<article class="card" data-cat="auto">
+  <div class="media">
+    <video src="/assets/CenteringTable_COMPAS.mp4" controls playsinline preload="metadata" muted controlsList="nodownload"></video>
+  </div>
+  <div class="tagRow" style="margin-top:10px;">
+    <span class="tag red">Automatización</span>
+    <span class="tag dim">Dispositivo</span>
+    <span class="tag dim">Centering Table</span>
+  </div>
+  <h3 class="proj-title">Centering Table — Dispositivo de centrado</h3>
+  <p class="proj-desc">Diseño e integración de mesa de centrado para asegurar repetibilidad y alineación en estación de proceso.</p>
+  <ul class="bullets">
+    <li>Objetivo: centrado rápido y repetible</li>
+    <li>Entregables: diseño, fabricación e integración</li>
+  </ul>
+  <div class="rights">El material mostrado es propiedad de Vector Engineering (México). Todos los derechos reservados.</div>
+</article>
 
-        <!-- PIRÓLISIS -->
-        <article class="card" data-cat="pyro">
-          <div class="tagRow">
-            <span class="tag red">Pirólisis</span>
-            <span class="tag dim">Condensación</span>
-          </div>
-          <h3 class="title">Tren térmico + Condensación</h3>
-          <p class="meta">Diseño, montaje e instrumentación para operación estable.</p>
-          <ul class="bullets">
-            <li>Separación y control de temperaturas</li>
-            <li>Optimización de rendimiento</li>
-          </ul>
-        </article>
+<article class="card" data-cat="auto">
+  <div class="media">
+    <video src="/assets/Manipulador_pre-picking.mp4" controls playsinline preload="metadata" muted controlsList="nodownload"></video>
+  </div>
+  <div class="tagRow" style="margin-top:10px;">
+    <span class="tag red">Automatización</span>
+    <span class="tag dim">Manipulador</span>
+    <span class="tag dim">Pre-picking</span>
+  </div>
+  <h3 class="proj-title">Manipulador pre-picking — asistencia de ensamble</h3>
+  <p class="proj-desc">Integración de manipulador para pre-picking y posicionamiento, orientado a ergonomía y reducción de tiempos de ciclo.</p>
+  <ul class="bullets">
+    <li>Objetivo: seguridad del operador + repetibilidad</li>
+    <li>Alcance: integración mecánica + validación funcional</li>
+  </ul>
+  <div class="rights">El material mostrado es propiedad de Vector Engineering (México). Todos los derechos reservados.</div>
+</article>
 
-        <article class="card" data-cat="pyro">
-          <div class="tagRow">
-            <span class="tag red">Pirólisis</span>
-            <span class="tag dim">Scrubbers</span>
-          </div>
-          <h3 class="title">Tratamiento de gases + Seguridad</h3>
-          <p class="meta">Scrubbers, control, procedimientos y puesta en marcha.</p>
-          <ul class="bullets">
-            <li>Control de emisiones y estabilidad</li>
-            <li>Interlocks y rutinas de seguridad</li>
-          </ul>
-        </article>
+<article class="card" data-cat="auto">
+  <div class="media">
+    <img src="/assets/VinMarkerArm_Trim.jpg" alt="VinMarkerArm_Trim — Marcado VIN en estación Trim">
+  </div>
+  <div class="tagRow" style="margin-top:10px;">
+    <span class="tag red">Automatización</span>
+    <span class="tag dim">Marcado</span>
+    <span class="tag dim">VIN</span>
+    <span class="tag dim">Trim</span>
+  </div>
+  <h3 class="proj-title">VinMarkerArm_Trim — Marcado VIN en estación Trim</h3>
+  <p class="proj-desc">Integración de dispositivo de marcado VIN en estación Trim, con enfoque en trazabilidad, repetibilidad y seguridad operativa.</p>
+  <ul class="bullets">
+    <li>Objetivo: trazabilidad (VIN) y cero errores de marcado</li>
+    <li>Alcance: integración mecánica + validación funcional</li>
+  </ul>
+  <div class="rights">El material mostrado es propiedad de Vector Engineering (México). Todos los derechos reservados.</div>
+</article>
+
+<!-- ===== PIRÓLISIS (2) ===== -->
+
+<article class="card" data-cat="pyro">
+  <div class="media">
+    <video src="/assets/PlasticOil_Distillation_2024.mp4" controls playsinline preload="metadata" muted controlsList="nodownload"></video>
+  </div>
+  <div class="tagRow" style="margin-top:10px;">
+    <span class="tag red">Pirólisis</span>
+    <span class="tag dim">Destilación</span>
+    <span class="tag dim">Plastic Oil</span>
+  </div>
+  <h3 class="proj-title">Plastic Oil — Destilación (2024)</h3>
+  <p class="proj-desc">Evidencia de operación/ajuste en etapa de destilación para separación y calidad de fracciones.</p>
+  <ul class="bullets">
+    <li>Enfoque: estabilidad térmica y control de operación</li>
+    <li>Resultado: separación y consistencia de producto</li>
+  </ul>
+  <div class="rights">El material mostrado es propiedad de Vector Engineering (México). Todos los derechos reservados.</div>
+</article>
+
+<article class="card" data-cat="pyro">
+  <div class="media">
+    <video src="/assets/TPO_Mexico_2023.mp4" controls playsinline preload="metadata" muted controlsList="nodownload"></video>
+  </div>
+  <div class="tagRow" style="margin-top:10px;">
+    <span class="tag red">Pirólisis</span>
+    <span class="tag dim">TPO</span>
+    <span class="tag dim">México</span>
+  </div>
+  <h3 class="proj-title">TPO — Operación/Comisionamiento (2023)</h3>
+  <p class="proj-desc">Evidencia de operación/comisionamiento de línea para producción de TPO con controles de seguridad.</p>
+  <ul class="bullets">
+    <li>Enfoque: procedimientos + control operativo</li>
+    <li>Resultado: operación estable y repetible</li>
+  </ul>
+  <div class="rights">El material mostrado es propiedad de Vector Engineering (México). Todos los derechos reservados.</div>
+</article>
 
        
 
