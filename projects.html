@@ -133,6 +133,35 @@
     .chip.active{
       border-color: var(--accentLine);
       background: linear-gradient(180deg, var(--accentSoft), rgba(255,255,255,.06));
+      /* ===== Section dividers inside Projects grid ===== */
+.sectionLabel{
+  grid-column: 1 / -1;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+}
+
+.sectionLabel h2{
+  margin:0;
+  font-size:12px;
+  letter-spacing:.22px;
+  font-weight:950;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.92);
+}
+
+.sectionLabel .line{
+  flex:1;
+  height:1px;
+  background:rgba(255,255,255,.16);
+}
+
+/* Un poco más de separación antes de Pirólisis */
+.sectionLabel[data-cat="pyro"]{ margin-top: 8px; }
     }
 
     /* ===== Simple Project Cards (Evidencia + Título) ===== */
