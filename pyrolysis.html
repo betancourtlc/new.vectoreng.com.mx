@@ -1,9 +1,602 @@
-<!doctype html><html lang="es"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Vector Engineering</title>
-<style>body{margin:0;font-family:system-ui;background:#070b14;color:#e9eefc} .w{max-width:1000px;margin:0 auto;padding:48px 18px} a{color:#9adfff}</style>
-</head><body><div class="w">
-<a href="/">← Volver</a>
-<h1>Pirólisis Industrial y Procesos Circulares</h1>
-<p>Contenido en construcción. Aquí irá tu oferta, entregables, y casos.</p>
-</div></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pirólisis & Procesos Circulares — Vector Engineering</title>
+  <meta name="description" content="Pirólisis industrial y procesos circulares: tren térmico, condensación, scrubbers, operación y comisionamiento. Vector Engineering." />
+
+  <style>
+    :root{
+      --bg:#070b14;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.78);
+      --line:rgba(255,255,255,.16);
+      --glass:rgba(255,255,255,.08);
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+
+      --accent:#10b981;                 /* verde para Pyro */
+      --accentSoft:rgba(16,185,129,.16);
+      --accentLine:rgba(16,185,129,.42);
+
+      --radius:18px;
+      --max:1120px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--text);
+      background:var(--bg);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* ===== Background (igual a Automation/Projects, overlay visible) ===== */
+    .bg{
+      position:fixed; inset:0; z-index:-2;
+      background:url("/assets/hero.webp?v=250") center/cover no-repeat;
+      filter:saturate(1.05) contrast(1.08) brightness(1.06);
+      transform:scale(1.02);
+      will-change:transform;
+    }
+    .bg::before{
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(90deg,
+        rgba(7,11,20,.78) 0%,
+        rgba(7,11,20,.58) 50%,
+        rgba(7,11,20,.78) 100%);
+    }
+    .bg::after{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(circle at center, transparent 36%, rgba(0,0,0,.40) 100%);
+      opacity:.78;
+      mix-blend-mode:multiply;
+    }
+
+    /* ===== Nav ===== */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      background:rgba(7,11,20,.52);
+      border-bottom:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:12px 0; flex-wrap:wrap;
+    }
+    .brandPlate{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow:var(--shadow);
+    }
+    .brandPlate img{height:34px; width:auto; display:block}
+    .links{
+      display:flex; flex-wrap:wrap; gap:10px;
+      color:rgba(255,255,255,.82);
+      font-weight:950; font-size:13px;
+    }
+    .links a{
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+    }
+    .links a:hover{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.22)}
+
+    /* ===== Page layout ===== */
+    .page{min-height:100vh; padding:26px 0 40px}
+
+    .hero{
+      margin-top:18px;
+      padding:18px;
+      border-radius: calc(var(--radius) + 10px);
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:950; font-size:12px;
+      color:rgba(255,255,255,.88);
+    }
+
+    h1{
+      margin:12px 0 8px;
+      font-size:clamp(26px,3.2vw,42px);
+      line-height:1.08;
+    }
+
+    .lead{
+      margin:0;
+      color:var(--muted);
+      font-weight:650;
+      max-width:92ch;
+      line-height:1.55;
+    }
+
+    .actions{
+      margin-top:14px;
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.20);
+      background:rgba(255,255,255,.085);
+      color:rgba(255,255,255,.96);
+      font-weight:950;
+      letter-spacing:.1px;
+      transition:transform .12s ease, border-color .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.30)}
+    .btn.primary{
+      border-color:var(--accentLine);
+      background:linear-gradient(180deg,var(--accentSoft),rgba(255,255,255,.08));
+    }
+    .btn.primary:hover{border-color:rgba(16,185,129,.62); background:linear-gradient(180deg,rgba(16,185,129,.22),rgba(255,255,255,.10))}
+
+    /* ===== Sections ===== */
+    .section{
+      margin-top:14px;
+      padding:16px;
+      border-radius: calc(var(--radius) + 6px);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .sectionTitle{
+      margin:0 0 10px;
+      font-weight:980;
+      letter-spacing:.15px;
+      color:rgba(255,255,255,.92);
+      font-size:14px;
+      text-transform:uppercase;
+    }
+
+    /* ===== Trajectory layout (Highlights + Map) ===== */
+    .twoCol{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:12px;
+      margin-top:12px;
+      align-items:stretch;
+    }
+    .panel{
+      padding:14px;
+      border-radius:18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .panel h3{
+      margin:0 0 8px;
+      font-size:14px;
+      font-weight:980;
+      letter-spacing:.1px;
+      color:rgba(255,255,255,.92);
+    }
+    .panel p, .panel li{
+      color:rgba(255,255,255,.78);
+      font-weight:650;
+      line-height:1.45;
+      font-size:13px;
+    }
+    .panel ul{margin:0; padding-left:18px}
+    .panel li{margin:6px 0}
+
+    .mapBox{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      position:relative;
+      min-height:260px;
+    }
+    .mapBox img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      filter:saturate(1.02) contrast(1.02);
+    }
+    .mapCap{
+      position:absolute;
+      left:12px; right:12px; bottom:10px;
+      font-size:12px;
+      color:rgba(255,255,255,.86);
+      font-weight:900;
+      text-shadow:0 6px 24px rgba(0,0,0,.65);
+    }
+
+    /* ===== Video block ===== */
+    .videoWrap{
+      display:grid;
+      place-items:center;
+      margin-top:10px;
+    }
+    .media{
+      width:min(980px, 100%);
+      aspect-ratio:16/9;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      box-shadow:0 14px 50px rgba(0,0,0,.35);
+      position:relative;
+    }
+    .media video, .media iframe{
+      width:100%; height:100%;
+      display:block;
+      border:0;
+    }
+    .media.placeholder{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:8px;
+      color:rgba(255,255,255,.78);
+      font-weight:900;
+      text-align:center;
+      padding:18px;
+    }
+    .media.placeholder small{
+      color:rgba(255,255,255,.62);
+      font-weight:750;
+    }
+
+    /* ===== Residues card (image + text) ===== */
+    .resGrid{
+      display:grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap:12px;
+      align-items:stretch;
+      margin-top:10px;
+    }
+    .imgCard{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      min-height:260px;
+    }
+    .imgCard img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .textCard{
+      padding:14px;
+      border-radius:18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .textCard b{display:block; margin-bottom:8px; font-weight:980}
+    .chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin-top:10px;
+    }
+    .chip{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:rgba(255,255,255,.86);
+      font-weight:850;
+      font-size:12px;
+    }
+
+    /* ===== Reactors section ===== */
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .card{
+      padding:14px;
+      border-radius:18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .card b{display:block; margin-bottom:6px; font-weight:980}
+    .card span{
+      display:block;
+      color:rgba(255,255,255,.78);
+      font-weight:650;
+      line-height:1.45;
+      font-size:13px;
+    }
+
+    /* ===== Bottom image band ===== */
+    .strip{
+      margin-top:14px;
+      padding:12px;
+      border-radius: calc(var(--radius) + 6px);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .stripHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .stripHead .hint{
+      color:rgba(255,255,255,.66);
+      font-weight:750;
+      font-size:12px;
+    }
+    .thumbs{
+      display:flex;
+      gap:10px;
+      overflow:auto;
+      padding-bottom:4px;
+      scroll-snap-type:x mandatory;
+    }
+    .thumb{
+      flex:0 0 auto;
+      width:230px;
+      aspect-ratio: 16 / 9;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      scroll-snap-align:start;
+      position:relative;
+    }
+    .thumb img{
+      width:100%; height:100%;
+      display:block;
+      object-fit:cover;
+    }
+    .thumb::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.50) 100%);
+    }
+    .thumb .cap{
+      position:absolute;
+      left:10px;
+      right:10px;
+      bottom:8px;
+      color:rgba(255,255,255,.92);
+      font-weight:900;
+      font-size:12px;
+      text-shadow:0 4px 18px rgba(0,0,0,.6);
+    }
+
+    .footer{
+      margin-top:14px;
+      color:rgba(255,255,255,.62);
+      font-weight:750;
+      font-size:12px;
+    }
+
+    @media (max-width: 980px){
+      .twoCol{grid-template-columns:1fr}
+      .resGrid{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr}
+      .thumb{width:210px}
+      .mapBox{min-height:220px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" id="bg" aria-hidden="true"></div>
+
+  <div class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="/" aria-label="Inicio">
+          <span class="brandPlate"><img src="/assets/logo.png" alt="Vector Engineering"></span>
+        </a>
+        <div class="links">
+          <a href="/automation.html">Automatización</a>
+          <a href="/pyrolysis.html">Pirólisis &amp; Procesos Circulares</a>
+          <a href="/projects.html">Proyectos</a>
+          <a href="/contact.html">Contacto</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="page">
+    <div class="container">
+
+      <!-- ===== SECCIÓN 1: Trayectoria + Highlights + Mapa ===== -->
+      <section class="hero">
+        <div class="kicker">Pirólisis industrial • Procesos circulares • Tren térmico • Scrubbers</div>
+        <h1>Trayectoria en pirólisis industrial</h1>
+        <p class="lead">Experiencia comprobada en neumáticos y plásticos de desecho.</p>
+
+        <div class="actions">
+          <a class="btn primary" href="/contact.html">Solicitar cotización</a>
+          <a class="btn" href="/projects.html">Ver proyectos</a>
+        </div>
+
+        <div class="twoCol">
+          <div class="panel">
+            <h3>Highlights</h3>
+            <ul>
+              <li>Más de 15 proyectos en 3 continentes.</li>
+              <li>Diseño, instalación, startup y operación de planta(s) de pirólisis en México.</li>
+              <li>Proyectos de mejora en plantas de pirólisis de neumáticos y plásticos.</li>
+              <li>Validación y testeo de múltiples tecnologías (neumáticos y plásticos).</li>
+              <li>Tecnología propia para optimización de procesos reactivos y de separación.</li>
+              <li>Parámetros por residuo: ventana de operación, calidad y estabilidad del proceso.</li>
+              <li>Pirólisis de: llantas, HDPE, LDPE, EVA, Tetrapak, aceite quemado y plásticos de RPBI.</li>
+            </ul>
+          </div>
+
+          <div class="mapBox">
+            <!-- Reemplaza por tu imagen del mapa/alcance -->
+            <img src="/assets/pyro_map.jpg" alt="Alcance global — Vector Engineering" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;padding:16px;color:rgba(255,255,255,.78);font-weight:850;&quot;>Inserta aquí tu imagen de mapa (assets/pyro_map.jpg)</div>';">
+            <div class="mapCap">Alcance global (ejemplo)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SECCIÓN 2: Video (centro) ===== -->
+      <section class="section">
+        <div class="sectionTitle">Video</div>
+        <div class="videoWrap">
+          <!-- Opción A: video local -->
+          <div class="media">
+            <video src="/assets/pyro_video.mp4" controls playsinline preload="metadata" poster="/assets/pyro_video_poster.jpg"></video>
+          </div>
+
+          <!-- Opción B: si prefieres YouTube/Vimeo, reemplaza el div de arriba por:
+          <div class="media">
+            <iframe src="https://www.youtube.com/embed/XXXXX" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          -->
+        </div>
+      </section>
+
+      <!-- ===== SECCIÓN 3: Residuos (imagen + texto) ===== -->
+      <section class="section">
+        <div class="sectionTitle">Residuos y materiales procesados</div>
+
+        <div class="resGrid">
+          <div class="imgCard">
+            <!-- Inserta aquí la imagen que explique feedstocks -->
+            <img src="/assets/pyro_feedstocks.jpg" alt="Residuos / Feedstocks" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;padding:16px;color:rgba(255,255,255,.78);font-weight:850;&quot;>Inserta aquí tu imagen (assets/pyro_feedstocks.jpg)</div>';">
+          </div>
+
+          <div class="textCard">
+            <b>Hemos trabajado con múltiples corrientes de residuo</b>
+            <p style="margin:0;color:rgba(255,255,255,.78);font-weight:650;line-height:1.5;">
+              Ajustamos ventana de operación, tren térmico y condensación según el residuo para asegurar estabilidad, seguridad y calidad de producto.
+            </p>
+
+            <div class="chips">
+              <span class="chip">Llantas</span>
+              <span class="chip">HDPE</span>
+              <span class="chip">LDPE</span>
+              <span class="chip">EVA</span>
+              <span class="chip">Tetrapak</span>
+              <span class="chip">Aceite quemado</span>
+              <span class="chip">Plásticos RPBI</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SECCIÓN 4: Tipos de reactores ===== -->
+      <section class="section">
+        <div class="sectionTitle">Experiencia por tipo de reactor</div>
+
+        <div class="grid3">
+          <div class="card">
+            <b>Batch (reactor rotatorio)</b>
+            <span>Procesos por lote con enfoque en control térmico, seguridad e interlocks de operación.</span>
+          </div>
+          <div class="card">
+            <b>Lecho fijo</b>
+            <span>Configuraciones robustas para corrientes heterogéneas y operación estable.</span>
+          </div>
+          <div class="card">
+            <b>Lecho fluidizado</b>
+            <span>Transferencia de calor y control para operación continua y rendimiento.</span>
+          </div>
+          <div class="card">
+            <b>Auger (continuo)</b>
+            <span>Transporte sólido + control de residencia para escalamiento y modularidad.</span>
+          </div>
+          <div class="card">
+            <b>Rotatorios / continuos</b>
+            <span>Integración de tren térmico, condensación y tratamiento de gases para estabilidad.</span>
+          </div>
+          <div class="card">
+            <b>Diseño del tren térmico</b>
+            <span>Quemadores, recirculación, condensación, scrubbers y control de emisiones.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SECCIÓN 5: Banda final (5–6 imágenes) ===== -->
+      <section class="strip">
+        <div class="stripHead">
+          <div class="sectionTitle" style="margin:0">Galería</div>
+          <div class="hint">Inserta 5–6 imágenes nuevas en /assets/ y actualiza los src</div>
+        </div>
+
+        <div class="thumbs">
+          <div class="thumb">
+            <img src="/assets/pyro_gallery_01.jpg" alt="Pyro 01">
+            <div class="cap">Ejemplo 01</div>
+          </div>
+          <div class="thumb">
+            <img src="/assets/pyro_gallery_02.jpg" alt="Pyro 02">
+            <div class="cap">Ejemplo 02</div>
+          </div>
+          <div class="thumb">
+            <img src="/assets/pyro_gallery_03.jpg" alt="Pyro 03">
+            <div class="cap">Ejemplo 03</div>
+          </div>
+          <div class="thumb">
+            <img src="/assets/pyro_gallery_04.jpg" alt="Pyro 04">
+            <div class="cap">Ejemplo 04</div>
+          </div>
+          <div class="thumb">
+            <img src="/assets/pyro_gallery_05.jpg" alt="Pyro 05">
+            <div class="cap">Ejemplo 05</div>
+          </div>
+          <div class="thumb">
+            <img src="/assets/pyro_gallery_06.jpg" alt="Pyro 06">
+            <div class="cap">Ejemplo 06</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">© Vector Engineering — Pirólisis & Procesos Circulares</div>
+    </div>
+  </main>
+
+  <script>
+    // Parallax sutil (igual que projects/automation)
+    (function () {
+      const bg = document.getElementById('bg');
+      if (!bg) return;
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      let ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY || 0;
+          bg.style.transform = 'scale(1.02) translate3d(0,' + (y * 0.015) + 'px,0)';
+          ticking = false;
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
