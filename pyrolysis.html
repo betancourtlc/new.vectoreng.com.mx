@@ -37,25 +37,27 @@
 
     /* ===== Background (igual a Automation/Projects, overlay visible) ===== */
     .bg{
-      position:fixed; inset:0; z-index:-2;
-      background:url("/assets/hero.webp?v=250") center/cover no-repeat;
-      filter:saturate(1.05) contrast(1.08) brightness(1.06);
-      transform:scale(1.02);
-      will-change:transform;
-    }
-    .bg::before{
-      content:""; position:absolute; inset:0;
-      background: linear-gradient(90deg,
-        rgba(7,11,20,.78) 0%,
-        rgba(7,11,20,.58) 50%,
-        rgba(7,11,20,.78) 100%);
-    }
-    .bg::after{
-      content:""; position:absolute; inset:0;
-      background: radial-gradient(circle at center, transparent 36%, rgba(0,0,0,.40) 100%);
-      opacity:.78;
-      mix-blend-mode:multiply;
-    }
+  position:fixed; inset:0; z-index:-2;
+  background:url("/assets/hero.webp?v=250") center/cover no-repeat;
+  filter:saturate(1.08) contrast(1.12) brightness(1.14);
+  transform:scale(1.02);
+  will-change:transform;
+}
+
+.bg::before{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(90deg,
+    rgba(7,11,20,.62) 0%,
+    rgba(7,11,20,.40) 50%,
+    rgba(7,11,20,.62) 100%);
+}
+
+.bg::after{
+  content:""; position:absolute; inset:0;
+  background: radial-gradient(circle at center, transparent 42%, rgba(0,0,0,.22) 100%);
+  opacity:.52;
+  mix-blend-mode:multiply;
+}
 
     /* ===== Nav ===== */
     .nav{
