@@ -305,7 +305,19 @@
       <div class="footer">© Vector Engineering — Contacto</div>
     </div>
   </main>
+<script>
+  (function () {
+    const form = document.getElementById('contact-form');
+    const submitButton = document.getElementById('submitButton');
+    if (!form || !submitButton) return;
 
+    form.addEventListener('submit', function () {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Enviando...';
+      submitButton.style.cursor = 'wait';
+    });
+  })();
+</script>
   <script>
     (function () {
       const bg = document.getElementById('bg');
